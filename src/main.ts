@@ -1,3 +1,9 @@
+//import NameAndWeather
+import * as NameAndWeatherLocation from "./Modules/NameAndWeather";
+import {Name as OtherName} from "./Modules/DuplicateName";
+import { TempConverter } from "./tempConverter";
+import { from } from "rxjs";
+
 /*onsole.log("Hello");
 console.log("Apples");
 console.log("This is a statement");
@@ -56,8 +62,6 @@ console.log(myFunc("Jackie"));*/
 
 //Usign Primitive Types.
 //Booleans
-let firstBool = true;
-let secondBool = false;
 //Strings 
 let firstString = "This is a string";
 let secondString = "And so is this"; 
@@ -77,7 +81,7 @@ let hexValue = 0XFFFF;
 
 
 //Using Conditional Statements 
-let namee = "Jacqui";
+/*let namee = "Jacqui";
 
 if(namee == "Adam"){
   console.log("Name is Adam");
@@ -161,7 +165,96 @@ let products = [{name:"Hat", price:24.5, stock: 10},
 
 /*Select the items in the array whose stock value is greater than zero 
 and use the reduce method to determine the total value of those items*/
-let totalValue = products.filter(item => item.stock > 0)
+/*let totalValue = products.filter(item => item.stock > 0)
                           .reduce((prev, item) => prev + (item.price * item.stock),0);
 console.log(`Total value: $${totalValue.toFixed(2)}`);
 
+//Workin with Objects
+// let myData = new Object();
+// myData.name = "Jackie";
+// myData.weather = "sunny";
+let myData4 = {
+  name: "Jackie",
+  weather: "sunny"
+};
+
+console.log(`Hello ${myData4.name}.`);
+console.log(`Today is ${myData4.weather}.`);
+
+//Using Functions as Methods
+let myData5 = {
+  name: "Jackie",
+  weather: "sunny",
+  printMessager: function(){
+    console.log(`Hello ${this.name}.`);
+    console.log(`Today is ${this.weather}.`);
+  }
+};
+myData5.printMessager(); */
+
+//Defining Classes
+class MyClass {
+  constructor(name, weather){
+    this.name = name;
+    this._weather = weather;
+  }
+  
+  set weather(value){
+    this._weather = value;
+  }
+
+  get weather(){
+    return `Today is ${this._weather}`;
+  }
+
+  printMesseges(){
+    console.log(`Hello ${this.name}.`);
+    console.log(this.weather);
+  }
+}
+
+
+//Using Class Inheritance
+class MySubClass extends MyClass {
+  constructor(name, weather, city){
+    super(name, weather);
+    this.city = city;
+  }
+
+  printMesseges(){
+    super.printMesseges();
+    console.log(`You are in ${this.city}`);
+  }
+}
+
+
+let myData = new MySubClass("Jackie","sunny","Leon");
+myData.printMesseges();
+
+//Using NameAndWeather
+let name = new NameAndWeatherLocation.Name("Jackie", "Cortez");
+let loc = new NameAndWeatherLocation.WeatherLocation("raining","Leon");
+let other = new OtherName();
+
+let cTemp = TempConverter.convertFtoC("38");
+
+console.log(name.nameMessage);
+console.log(loc.weatherMessage);
+console.log(other.message);
+console.log(`The temp is ${cTemp}C`);
+
+//Using Tuples
+let tuple:[string, string, string];
+tuple = ["London","rainig", TempConverter.convertFtoC("38")];
+
+console.log(`It is ${tuple[2]} degrees C and ${tuple[1]} in ${tuple[0]}`);
+
+//Using Indexable Types
+let cities: {[string: string]: [string, string]} = {};
+cities["London"] = ["raining", TempConverter.convertFtoC("38")];
+cities["Paris"] = ["sunny", TempConverter.convertFtoC("52")];
+cities["Berlin"] = ["snowing", TempConverter.convertFtoC("23")];
+
+for(let key in cities){
+  console.log(`${key}: ${cities[key][0]}, ${cities[key][1]}`);
+}
